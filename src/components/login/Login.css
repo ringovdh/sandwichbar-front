@@ -1,0 +1,15 @@
+.login-container {
+    border: 1px solid cornflowerblue;
+    text-align: center;
+    width: 50%;
+}
+.titleContainer {
+    font-size: large;
+}
+.input-login {
+    width: 60% !important;
+}
+
+.errorLabel {
+    color: crimson;
+}
