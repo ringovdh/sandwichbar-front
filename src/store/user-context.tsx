@@ -1,36 +1,53 @@
 import {createContext, useState} from 'react';
-import userService from "../services/UserService";
+import userService from "../services/AuthenticationService";
 import {useNavigate} from "react-router-dom";
 
 export const UserContext = createContext({
     userName: '',
-    registerUser: (name: string, email: string, password: string) => {},
-    loginUser: (email: string, password: string) => {}
+    errorMessage: '',
+    registerUser: (name: string, email: string, password: string) => {
+    },
+    loginUser: (email: string, password: string) => {
+    }
 });
 
 // @ts-ignore
 export default function UserContextProvider({children}) {
 
     const [userName, setUserName] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
     let navigate = useNavigate();
-    const registerUser = (name: string, email: string, password: string) => {
-         userService.registerUser(name, email, password)
+    const registerUser = async (name: string, email: string, password: string) => {
+        setErrorMessage('');
+        userService.registerUser(name, email, password)
             .then((response) => {
                 setUserName(response.data.name);
-                navigate('/')
+                navigate('/login')
+            })
+            .catch((error) => {
+                if (error.response) {
+                    setErrorMessage(error.response.data.message)
+                }
             });
     }
 
     const loginUser = (email: string, password: string) => {
+        setErrorMessage('');
         userService.loginUser(email, password)
             .then((response) => {
                 setUserName(response.data.name);
                 navigate('/')
-        });
+            })
+            .catch((error) => {
+                if (error.response) {
+                    setErrorMessage(error.response.data.message)
+                }
+            });
     }
 
     const ctxValue = {
         userName: userName,
+        errorMessage: errorMessage,
         registerUser: registerUser,
         loginUser: loginUser
     }

@@ -1,9 +1,9 @@
 import axios from "axios";
 
-class UserService {
+class AuthenticationService {
 
     async registerUser(name: string, email: string, password: string) {
-        return await axios.post('http://localhost:8080/users/register',
+        return await axios.post('http://localhost:8080/authenticate/register',
             {name, email, password}
         );
     }
@@ -15,4 +15,4 @@ class UserService {
     }
 }
 
-export default new UserService();
+export default new AuthenticationService();
