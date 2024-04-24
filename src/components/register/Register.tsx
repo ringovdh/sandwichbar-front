@@ -1,11 +1,11 @@
 import React, {useContext, useState} from "react";
-import {UserContext} from "../../store/user-context";
+import UserContext from "../../store/UserContext";
 import Warning from "../warning/Warning";
 
 
 const Register = () => {
 
-    const userContext = useContext(UserContext)
+    const userCtx = useContext(UserContext)
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -25,14 +25,14 @@ const Register = () => {
         } else if ('' === password) {
             setPasswordError('Please enter a strong password')
         } else {
-            userContext.registerUser(name, email, password);
+            userCtx.registerUser(name, email, password);
         }
     }
 
 
     return (
         <>
-            { userContext.errorMessage && < Warning  message={userContext.errorMessage} /> }
+            { userCtx.errorMessage && < Warning  message={userCtx.errorMessage} /> }
             <div className="login-container mx-auto">
                 <div className={"titleContainer"}>
                     <div>Register</div>

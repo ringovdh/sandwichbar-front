@@ -1,0 +1,63 @@
+.sandwiches-container {
+    width: 90%;
+    max-width: 70rem;
+    list-style: none;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+#sandwiches {
+    display: flex;
+}
+
+.sandwich {
+    border-radius: 1rem;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+    width: 33%;
+    margin: 10px;
+}
+
+.sandwich article {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sandwich h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0.75rem 0;
+}
+
+.sandwich-ingredients {
+    margin: 1rem;
+}
+
+.sandwich-price {
+    display: inline-block;
+    background-color: #e9ecef;
+    color: #ffc404;
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 0.5rem 2rem;
+    margin: 0;
+    border-radius: 4px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+}
+
+.sandwich-actions {
+    margin-bottom: 1.5rem;
+}
+
+.sandwich-actions button {
+    font: inherit;
+    cursor: pointer;
+    background-color: #ffc404;
+    border: 1px solid #ffc404;
+    color: #1f1a09;
+    padding: 0.5rem 1.5rem;
+    border-radius: 4px;
+}

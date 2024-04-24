@@ -1,6 +1,7 @@
 import {useContext} from "react";
 import './Home.css';
-import {UserContext} from "../../store/user-context";
+import UserContext from "../../store/UserContext";
+import Menucard from "../menuCard/Menucard";
 
 const Home = () => {
 
@@ -9,8 +10,8 @@ const Home = () => {
     return(
         <div className="home-page-container">
             <p>Welcome {userCtx.userName} in our sandwichbar!</p>
-
-            <div className='sandwich'></div>
+            <Menucard></Menucard>
+            <div className='sandwichbar-background'></div>
         </div>
     );
 

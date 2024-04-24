@@ -2,7 +2,8 @@ import {createContext, useState} from 'react';
 import userService from "../services/AuthenticationService";
 import {useNavigate} from "react-router-dom";
 
-export const UserContext = createContext({
+const UserContext = createContext({
+    userId: 0,
     userName: '',
     errorMessage: '',
     registerUser: (name: string, email: string, password: string) => {
@@ -12,8 +13,9 @@ export const UserContext = createContext({
 });
 
 // @ts-ignore
-export default function UserContextProvider({children}) {
+export function UserContextProvider({children}) {
 
+    const [userId, setUserId] = useState(0)
     const [userName, setUserName] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     let navigate = useNavigate();
@@ -35,6 +37,8 @@ export default function UserContextProvider({children}) {
         setErrorMessage('');
         userService.loginUser(email, password)
             .then((response) => {
+                sessionStorage.setItem('token', response.data.token)
+                setUserId(response.data.userId);
                 setUserName(response.data.name);
                 navigate('/')
             })
@@ -46,14 +50,17 @@ export default function UserContextProvider({children}) {
     }
 
     const ctxValue = {
+        userId: userId,
         userName: userName,
         errorMessage: errorMessage,
         registerUser: registerUser,
         loginUser: loginUser
     }
 
-
-    return (<UserContext.Provider value={ctxValue}>
-        {children}
-    </UserContext.Provider>)
+    return (
+        <UserContext.Provider value={ctxValue}>
+            {children}
+        </UserContext.Provider>);
 }
+
+export default UserContext;

@@ -1,11 +1,11 @@
 import React, {useContext, useState} from "react";
 import './Login.css';
 import {Link} from "react-router-dom";
-import {UserContext} from "../../store/user-context";
+import UserContext from "../../store/UserContext";
 import Warning from "../warning/Warning";
 
 const Login = () => {
-    const userContext = useContext(UserContext)
+    const userCtx = useContext(UserContext)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [emailError, setEmailError] = useState('')
@@ -20,13 +20,13 @@ const Login = () => {
         } else if ('' === password) {
             setPasswordError('Please enter a strong password')
         } else {
-            userContext.loginUser(email, password);
+            userCtx.loginUser(email, password);
         }
     }
 
     return (
         <>
-            {userContext.errorMessage && < Warning message={userContext.errorMessage}/>}
+            {userCtx.errorMessage && < Warning message={userCtx.errorMessage}/>}
             <div className="login-container mx-auto">
                 <div className={"titleContainer"}>
                     <div>Login</div>

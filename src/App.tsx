@@ -6,19 +6,33 @@ import Login from './components/login/Login';
 import Register from './components/register/Register';
 import Header from "./components/header/Header";
 import Home from "./components/home/Home";
-import UserContextProvider from "./store/user-context";
+import MyOrders from "./components/order/MyOrders"
+import {UserContextProvider} from "./store/UserContext";
+import {CartContextProvider} from "./store/CartContext";
+import {OrderProgressContextProvider} from "./store/OrderProgressContext";
+import Cart from "./components/cart/Cart";
+import Checkout from "./components/cart/Checkout";
+
 
 function App() {
+
     return (
         <UserContextProvider>
-            < Header />
-            <div className="container mt-3">
-                <Routes>
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/" element={<Home />} />
-                </Routes>
-            </div>
+            <OrderProgressContextProvider>
+                <CartContextProvider>
+                    < Header/>
+                    <div className="container mt-3">
+                        <Cart />
+                        <Checkout />
+                        <Routes>
+                            <Route path="/login" element={<Login/>}/>
+                            <Route path="/register" element={<Register/>}/>
+                            <Route path="/" element={<Home/>}/>
+                            <Route path="/orders/my-orders" element={<MyOrders/>}/>
+                        </Routes>
+                    </div>
+                </CartContextProvider>
+            </OrderProgressContextProvider>
         </UserContextProvider>
     );
 }
