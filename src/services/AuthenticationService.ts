@@ -9,8 +9,8 @@ class AuthenticationService {
     }
 
     async loginUser(email: string, password: string) {
-        return await axios.post('http://localhost:8080/users/login',
-            {email, password}
+        return await axios.post('http://localhost:8080/authenticate/login',
+            {email, password},
         );
     }
 }
