@@ -3,10 +3,11 @@ import {useEffect, useState} from "react";
 import sandwichService from "../../services/SandwichService";
 import SandwichItem from "./sandwich/SandwichItem";
 import Sandwich from "../../entities/sandwich";
+import MenuItem from "./menuItem/MenuItem";
 
-export default function Menucard() {
+const Menucard = () => {
 
-    const [sandwiches, setSandwiches] = useState([Sandwich]);
+    const [sandwiches, setSandwiches] = useState([] as Sandwich[]);
     useEffect(() => {
         async function loadSandwiches() {
             sandwichService.getSandwiches()
@@ -17,16 +18,21 @@ export default function Menucard() {
 
         loadSandwiches();
     }, []);
+
     return (
+
         <div id="menucard">
             <h1>Menucard</h1>
-            <div className="sandwiches-container">
-                <ul id="sandwiches">
-                    {sandwiches.map(s =>
-                        <SandwichItem sandwich= {s} />
-                    )}
-                </ul>
-            </div>
-        </div>);
+            <MenuItem title={"Sandwiches"}>
+                { sandwiches.map(s =>
+                    <SandwichItem sandwich= {s}/>
+                )}
+            </MenuItem>
 
+            <MenuItem title={"Drinks"}>
+                <p>Not available</p>
+            </MenuItem>
+        </div>);
 }
+
+export default Menucard

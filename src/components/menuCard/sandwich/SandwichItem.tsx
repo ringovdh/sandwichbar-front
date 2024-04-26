@@ -2,10 +2,15 @@ import { currencyFormatter} from "../../../utils/formatting";
 import Button from "../../ui/button/Button";
 import {useContext} from "react";
 import CartContext from "../../../store/CartContext";
+import Sandwich from "../../../entities/sandwich";
 
-// @ts-ignore
-export default ( { sandwich }) => {
+interface SandwichProps {
+    sandwich : Sandwich;
+}
 
+const SandwichItem = (props: SandwichProps ) => {
+
+    const sandwich = props.sandwich;
     const cartCtx = useContext(CartContext);
 
     function handleSandwichToCart() {
@@ -15,7 +20,7 @@ export default ( { sandwich }) => {
     }
 
     return (
-        <li className="sandwich">
+        <li className="product">
             <article>
                 <div>
                     <h3>{sandwich.name}</h3>
@@ -32,3 +37,5 @@ export default ( { sandwich }) => {
         </li>
     );
 };
+
+export default SandwichItem;

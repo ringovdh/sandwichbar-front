@@ -1,16 +1,24 @@
-.sandwiches-container {
+.menu-item-container {
     width: 90%;
     max-width: 70rem;
     list-style: none;
     margin: 2rem auto;
     padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
 }
 
-#sandwiches {
+.menu-item-container h2 {
+    text-align: center;
+    font-weight: bold;
+    margin: 0.75rem 0;
+}
+
+#menu-item-items {
     display: flex;
 }
 
-.sandwich {
+.product {
     border-radius: 1rem;
     overflow: hidden;
     text-align: center;
@@ -19,14 +27,14 @@
     margin: 10px;
 }
 
-.sandwich article {
+.product article {
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-.sandwich h3 {
+.product h3 {
     font-size: 1.5rem;
     font-weight: bold;
     margin: 0.75rem 0;

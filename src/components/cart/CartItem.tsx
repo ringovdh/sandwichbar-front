@@ -1,7 +1,7 @@
 import "./Cart.css"
 import {currencyFormatter} from "../../utils/formatting";
 
-// @ts-ignore
+
 interface CartItemProps {
     id?: number,
     name: string,
@@ -11,15 +11,15 @@ interface CartItemProps {
     down: () => void
 }
 
-export default function CartItem({id, name, price, quantity, up, down}: CartItemProps) {
+export default function CartItem(props: CartItemProps) {
 
     return (
         <li className="cart-item">
-            <p>{name} - {currencyFormatter.format(quantity * price)}</p>
+            <p>{props.name} - {currencyFormatter.format(props.quantity * props.price)}</p>
             <p className="cart-item-actions">
-                <button onClick={down}>-</button>
-                <span>{quantity}</span>
-                <button onClick={up}>+</button>
+                <button onClick={props.down}>-</button>
+                <span>{props.quantity}</span>
+                <button onClick={props.up}>+</button>
             </p>
         </li>
     );

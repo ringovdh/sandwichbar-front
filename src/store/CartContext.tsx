@@ -1,8 +1,9 @@
 import {createContext, useReducer} from "react";
+import Sandwich from "../entities/sandwich";
 
 const CartContext = createContext({
     items: [],
-    addSandwich: (item: any) => {},
+    addSandwich: (item: Sandwich) => {},
     removeItem: (id: any) => {},
 });
 
@@ -56,7 +57,6 @@ export function CartContextProvider({children}) {
     const [cart, dispatchCartAction] = useReducer(cartReducer, {items: []});
 
     function addSandwich(item: any) {
-
         dispatchCartAction({ type: 'ADD_ITEM', item });
     }
 
