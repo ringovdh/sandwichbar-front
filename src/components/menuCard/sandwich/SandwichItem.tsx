@@ -8,7 +8,7 @@ interface SandwichProps {
     sandwich : Sandwich;
 }
 
-const SandwichItem = (props: SandwichProps ) => {
+const SandwichItem = (props: SandwichProps) => {
 
     const sandwich = props.sandwich;
     const cartCtx = useContext(CartContext);
@@ -24,7 +24,7 @@ const SandwichItem = (props: SandwichProps ) => {
             <article>
                 <div>
                     <h3>{sandwich.name}</h3>
-                    <p className="sandwich-price">{currencyFormatter.format(sandwich.price)}</p>
+                    <p className="product-price">{currencyFormatter.format(sandwich.price)}</p>
                     <p className="sandwich-ingredients">ingredients:</p>
                 </div>
                 <p className="sandwich-actions">
@@ -36,6 +36,6 @@ const SandwichItem = (props: SandwichProps ) => {
             </article>
         </li>
     );
-};
+}
 
 export default SandwichItem;

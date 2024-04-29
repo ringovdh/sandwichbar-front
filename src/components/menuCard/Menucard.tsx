@@ -4,10 +4,15 @@ import sandwichService from "../../services/SandwichService";
 import SandwichItem from "./sandwich/SandwichItem";
 import MenuItem from "./menuItem/MenuItem";
 import Sandwich from "../../entities/sandwich";
+import Drink from "../../entities/drink";
+import drinkService from "../../services/DrinkService";
+import DrinkItem from "./drink/DrinkItem";
 
 const Menucard = () => {
 
     const [sandwiches, setSandwiches] = useState([] as Sandwich[]);
+    const [drinks, setDrinks] = useState([] as Drink[])
+
     useEffect(() => {
         async function loadSandwiches() {
             sandwichService.getSandwiches()
@@ -15,12 +20,18 @@ const Menucard = () => {
                     setSandwiches(response.data.sandwiches);
                 });
         }
+        async function loadDrinks() {
+            drinkService.getDrinks()
+                .then((response) => {
+                    setDrinks(response.data.drinks);
+                });
+        }
 
         loadSandwiches();
+        loadDrinks();
     }, []);
 
     return (
-
         <div id="menucard">
             <h1>Menucard</h1>
             <MenuItem title={"Sandwiches"}>
@@ -30,9 +41,11 @@ const Menucard = () => {
             </MenuItem>
 
             <MenuItem title={"Drinks"}>
-                <p>Not available</p>
+                { drinks.map(d => <DrinkItem drink= {d}/>
+                    )    }
             </MenuItem>
-        </div>);
+        </div>
+    );
 }
 
 export default Menucard

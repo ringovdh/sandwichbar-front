@@ -44,7 +44,7 @@
     margin: 1rem;
 }
 
-.sandwich-price {
+.product-price {
     display: inline-block;
     background-color: #e9ecef;
     color: #ffc404;
@@ -57,7 +57,7 @@
 }
 
 .sandwich-actions {
-    margin-bottom: 1.5rem;
+    margin: 1.5rem;
 }
 
 .sandwich-actions button {

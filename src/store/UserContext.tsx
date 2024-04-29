@@ -19,6 +19,7 @@ export function UserContextProvider({children}) {
     const [userName, setUserName] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     let navigate = useNavigate();
+
     const registerUser = async (name: string, email: string, password: string) => {
         setErrorMessage('');
         userService.registerUser(name, email, password)
