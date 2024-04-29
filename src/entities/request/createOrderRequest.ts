@@ -1,13 +1,12 @@
-import OrderItem from "../OrderItem";
-import Address from "../Address";
+import Address from "../address";
 
 class CreateOrderRequest {
     userId: number;
-    items: OrderItem[];
+    items: { quantity: number, product: {productId: string }}[];
     deliveryAddress: Address;
 
     constructor(userId: number,
-                items: OrderItem[],
+                items: { quantity: number, product: {productId: string }}[],
                 deliveryAddress: Address) {
         this.userId = userId;
         this.items = items;

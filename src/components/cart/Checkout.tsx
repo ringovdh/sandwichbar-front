@@ -8,10 +8,7 @@ import Button from "../ui/button/Button";
 import orderService from "../../services/OrderService";
 import UserContext from "../../store/UserContext";
 import CreateOrderRequest from "../../entities/request/createOrderRequest";
-import Address from "../../entities/Address";
-import OrderItem from "../../entities/OrderItem";
-import Sandwich from "../../entities/sandwich";
-import Drink from "../../entities/drink";
+import Address from "../../entities/address";
 
 export default function Checkout() {
     const cartCtx = useContext(CartContext);
@@ -21,10 +18,7 @@ export default function Checkout() {
     const houseNumberTextInputRef = useRef<HTMLInputElement>(null);
     const postcodeTextInputRef = useRef<HTMLInputElement>(null);
     const cityTextInputRef = useRef<HTMLInputElement>(null);
-
-    const cartTotal = cartCtx.items.reduce(
-        (totalPrice, item: { id: number, price: number, quantity: number }) => totalPrice + item.quantity * item.price
-        , 0);
+    const cartTotal = cartCtx.calculateCartTotal();
 
     function handleCloseCheckout() {
         orderProgressCtx.hideCheckout()
@@ -39,13 +33,7 @@ export default function Checkout() {
             +postcodeTextInputRef.current!.value,
             cityTextInputRef.current!.value);
 
-        const orderItems = cartCtx.items.map((i: OrderItem) => {
-            const item = new OrderItem(0, i.quantity);
-            item.sandwich = i.sandwich;
-            return item;
-
-        });
-
+        const orderItems  = cartCtx.items.map(i => ({ quantity: i.quantity, product: {productId: i.product.productId }}));
 
         const createOrderRequest = new CreateOrderRequest(userCtx.userId, orderItems, address);
 
@@ -53,8 +41,6 @@ export default function Checkout() {
         orderProgressCtx.hideCheckout()
     }
 
-
-    // @ts-ignore
     return (
         <Modal open={orderProgressCtx.progress === 'CHECKOUT'} onClose={handleCloseCheckout}>
             <form onSubmit={handleSubmit}>

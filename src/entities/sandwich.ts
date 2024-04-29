@@ -1,12 +1,9 @@
-class Sandwich {
-    id: number;
-    name: string;
-    price: number;
+import Product from "./product";
 
-    constructor(id: number, name: string, price: number) {
-        this.id = id;
-        this.name = name;
-        this.price = price
+class Sandwich extends Product{
+
+    constructor(id: number, name: string, price: number, productId: string) {
+        super(id, name, price, productId);
     }
 }
 

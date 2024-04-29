@@ -5,15 +5,11 @@ import {currencyFormatter} from "../../utils/formatting";
 import Button from "../ui/button/Button";
 import OrderProgressContext from "../../store/OrderProgressContext";
 import CartItem from "./CartItem";
-import OrderItem from "../../entities/OrderItem";
 
 export default function Cart() {
-
     const cartCtx = useContext(CartContext);
     const orderProgressCtx = useContext(OrderProgressContext);
-    const cartTotal = cartCtx.items.reduce(
-        (totalPrice, item: {id: number, price: number, quantity: number}) => totalPrice + item.quantity * item.price
-        , 0);
+    const cartTotal = cartCtx.calculateCartTotal();
 
     function handleCloseCart() {
         orderProgressCtx.hideCart()
@@ -23,21 +19,19 @@ export default function Cart() {
         orderProgressCtx.showCheckout()
     }
 
-
     return (
       <Modal
           open={orderProgressCtx.progress === 'CART'}
           onClose={orderProgressCtx.progress === 'CART' ? handleCloseCart : null}>
           <h2>Cart</h2>
           <ul>
-              {cartCtx.items.map((item: {id: number, name: string, price:number, quantity: number}) => (
-               <CartItem key={item.id}
-                         id={item.id}
-                         name={item.name}
-                         price={item.price}
+              {cartCtx.items.map((item) => (
+               <CartItem key={item.product.productId}
+                         name={item.product.name}
+                         price={item.product.price}
                          quantity={item.quantity}
-                         up={() => cartCtx.addSandwich(item)}
-                         down={() => cartCtx.removeItem(item.id)}/>
+                         up={() => cartCtx.addProduct(item.product)}
+                         down={() => cartCtx.removeProduct(item.product)}/>
               ))}
           </ul>
           <p className="cart-total">{currencyFormatter.format(cartTotal)}</p>

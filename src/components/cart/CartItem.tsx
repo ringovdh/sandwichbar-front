@@ -3,7 +3,6 @@ import {currencyFormatter} from "../../utils/formatting";
 
 
 interface CartItemProps {
-    id?: number,
     name: string,
     price: number,
     quantity: number,
@@ -15,7 +14,7 @@ export default function CartItem(props: CartItemProps) {
 
     return (
         <li className="cart-item">
-            <p>{props.name} - {currencyFormatter.format(props.quantity * props.price)}</p>
+            <p>{props.name} ({currencyFormatter.format(props.quantity * props.price)})</p>
             <p className="cart-item-actions">
                 <button onClick={props.down}>-</button>
                 <span>{props.quantity}</span>

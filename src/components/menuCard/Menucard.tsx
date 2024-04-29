@@ -2,8 +2,8 @@ import "./Menucard.css";
 import {useEffect, useState} from "react";
 import sandwichService from "../../services/SandwichService";
 import SandwichItem from "./sandwich/SandwichItem";
-import Sandwich from "../../entities/sandwich";
 import MenuItem from "./menuItem/MenuItem";
+import Sandwich from "../../entities/sandwich";
 
 const Menucard = () => {
 

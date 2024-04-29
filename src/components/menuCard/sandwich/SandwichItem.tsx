@@ -14,7 +14,7 @@ const SandwichItem = (props: SandwichProps ) => {
     const cartCtx = useContext(CartContext);
 
     function handleSandwichToCart() {
-        cartCtx.addSandwich(
+        cartCtx.addProduct(
             sandwich
         );
     }

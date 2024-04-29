@@ -1,12 +1,10 @@
-class Drink {
-    id: number;
-    name?: string;
-    price?: string;
+import Product from "./product";
 
-    constructor(id: number, name: string, price: string) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
+class Drink extends Product{
+    stock: number;
+    constructor(id: number, name: string, price: number, stock: number, productId: string) {
+        super(id, name, price, productId);
+        this.stock = stock;
     }
 }
 

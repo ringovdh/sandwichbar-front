@@ -1,36 +1,41 @@
-import {createContext, useReducer} from "react";
-import Sandwich from "../entities/sandwich";
+import {createContext, PropsWithChildren, ReactNode, useReducer} from "react";
+import OrderItem from "../entities/orderItem";
+import Product from "../entities/product";
+
+const ADD_PRODUCT = 'ADD_PRODUCT';
+const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
 
 const CartContext = createContext({
-    items: [],
-    addSandwich: (item: Sandwich) => {},
-    removeItem: (id: any) => {},
+    items: [] as OrderItem[],
+    addProduct: (product: Product) => {},
+    removeProduct: (product: Product) => {},
+    calculateCartTotal: () => { return 0 as number}
 });
 
-// @ts-ignore
-function cartReducer( state, action ) {
-    if (action.type === 'ADD_ITEM') {
+
+function cartReducer( state: { items: OrderItem[]; }, action: {type: string, product: Product} ) {
+    if (action.type === ADD_PRODUCT) {
         const existingCartItemIndex = state.items.findIndex(
-            (item: any) => item.id === action.item.id
+            (item) => item.product === action.product
         );
         const updatedItems = [...state.items];
 
         if (existingCartItemIndex > -1) {
             const existingItem = state.items[existingCartItemIndex];
-            const updatedItem = {
+            updatedItems[existingCartItemIndex] = {
                 ...existingItem,
                 quantity: existingItem.quantity + 1
             };
-            updatedItems[existingCartItemIndex] = updatedItem;
         } else {
-            updatedItems.push({...action.item, quantity: 1});
+            const orderItem = new OrderItem(1, action.product)
+            updatedItems.push(orderItem);
         }
-
         return {...state, items: updatedItems};
     }
-    if (action.type === 'REMOVE_ITEM') {
+
+    if (action.type === REMOVE_PRODUCT) {
         const existingCartItemIndex = state.items.findIndex(
-            (item: any) => item.id === action.id
+            (item) => item.product === action.product
         );
         const existingCartItem = state.items[existingCartItemIndex];
         const updatedItems = [...state.items];
@@ -38,41 +43,50 @@ function cartReducer( state, action ) {
         if (existingCartItem.quantity === 1) {
             updatedItems.splice(existingCartItemIndex, 1);
         } else {
-            const updatedItem = {
+            updatedItems[existingCartItemIndex] = {
                 ...existingCartItem,
                 quantity: existingCartItem.quantity - 1
             };
-            updatedItems[existingCartItemIndex] = updatedItem;
         }
-
         return {...state, items: updatedItems};
     }
 
     return state;
 }
 
-// @ts-ignore
-export function CartContextProvider({children}) {
+interface CartContextProviderProps {
+    children: ReactNode
+}
 
-    const [cart, dispatchCartAction] = useReducer(cartReducer, {items: []});
+export function CartContextProvider(props: PropsWithChildren<CartContextProviderProps>) {
 
-    function addSandwich(item: any) {
-        dispatchCartAction({ type: 'ADD_ITEM', item });
+    const [cart, dispatchCartAction] = useReducer(cartReducer, {items: [] as OrderItem[]});
+
+    function addProduct(product: Product) {
+        dispatchCartAction({ type: ADD_PRODUCT, product: product });
     }
 
-    function removeItem(id: number) {
-        dispatchCartAction({type: 'REMOVE_ITEM', id});
+    function removeProduct(product: Product) {
+        dispatchCartAction({type: REMOVE_PRODUCT, product: product});
+    }
+
+    function calculateCartTotal() {
+        return cart.items.reduce(
+            (totalPrice, item) =>
+                totalPrice + item.quantity * item.product.price
+            , 0);
     }
 
     const ctxValue = {
         items: cart.items,
-        addSandwich,
-        removeItem
+        addProduct,
+        removeProduct,
+        calculateCartTotal
     };
 
     return (
         <CartContext.Provider value={ctxValue}>
-            {children}
+            {props.children}
         </CartContext.Provider>);
 }
 
