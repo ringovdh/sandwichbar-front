@@ -33,7 +33,9 @@ export default function Checkout() {
             +postcodeTextInputRef.current!.value,
             cityTextInputRef.current!.value);
 
-        const orderItems  = cartCtx.items.map(i => ({ quantity: i.quantity, product: {productId: i.product.productId }}));
+        const orderItems  = cartCtx.items.map(i => {
+            return {quantity: i.quantity, productId: i.product.id};
+        });
 
         const createOrderRequest = new CreateOrderRequest(userCtx.userId, orderItems, address);
 

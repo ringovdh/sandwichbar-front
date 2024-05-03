@@ -20,7 +20,7 @@ const MyOrders = () => {
         <>
         <h2>My Orders</h2>
         <div>
-            {orders.length > 1 && <table className="table">
+            {orders.length >= 1 && <table className="table">
                 <thead>
                 <tr>
                     <th scope="col">#</th>

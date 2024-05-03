@@ -26,7 +26,7 @@ export default function Cart() {
           <h2>Cart</h2>
           <ul>
               {cartCtx.items.map((item) => (
-               <CartItem key={item.product.productId}
+               <CartItem key={item.product.id}
                          name={item.product.name}
                          price={item.product.price}
                          quantity={item.quantity}

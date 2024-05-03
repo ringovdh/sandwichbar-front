@@ -1,12 +1,12 @@
 import "./Menucard.css";
 import {useEffect, useState} from "react";
-import sandwichService from "../../services/SandwichService";
+import productService from "../../services/ProductService";
 import SandwichItem from "./sandwich/SandwichItem";
 import MenuItem from "./menuItem/MenuItem";
 import Sandwich from "../../entities/sandwich";
 import Drink from "../../entities/drink";
-import drinkService from "../../services/DrinkService";
 import DrinkItem from "./drink/DrinkItem";
+import Product from "../../entities/product";
 
 const Menucard = () => {
 
@@ -14,35 +14,32 @@ const Menucard = () => {
     const [drinks, setDrinks] = useState([] as Drink[])
 
     useEffect(() => {
-        async function loadSandwiches() {
-            sandwichService.getSandwiches()
+        async function loadProducts() {
+            productService.getProducts()
                 .then((response) => {
-                    setSandwiches(response.data.sandwiches);
-                });
-        }
-        async function loadDrinks() {
-            drinkService.getDrinks()
-                .then((response) => {
-                    setDrinks(response.data.drinks);
+                    console.log('resp ', response)
+                    setSandwiches(response.data.products.filter((p: Product) => p.productType === 'SANDWICH'));
+                    setDrinks(response.data.products.filter((p: Product) => p.productType === 'DRINK'));
                 });
         }
 
-        loadSandwiches();
-        loadDrinks();
+        loadProducts();
+
     }, []);
 
     return (
         <div id="menucard">
             <h1>Menucard</h1>
             <MenuItem title={"Sandwiches"}>
-                { sandwiches.map(s =>
-                    <SandwichItem sandwich= {s}/>
+                {sandwiches.map(s =>
+                    <SandwichItem sandwich={s}/>
                 )}
             </MenuItem>
 
             <MenuItem title={"Drinks"}>
-                { drinks.map(d => <DrinkItem drink= {d}/>
-                    )    }
+                {drinks.map(d =>
+                    <DrinkItem drink={d}/>
+                )}
             </MenuItem>
         </div>
     );

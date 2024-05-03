@@ -1,9 +1,13 @@
 import Product from "./product";
+import Ingredient from "./ingredient";
 
 class Sandwich extends Product{
 
-    constructor(id: number, name: string, price: number, productId: string) {
-        super(id, name, price, productId);
+    ingredients: Ingredient[];
+
+    constructor(id: number, name: string, price: number, ingredients: Ingredient[]) {
+        super(id, name, price, "SANDWICH");
+        this.ingredients = ingredients
     }
 }
 

@@ -3,6 +3,7 @@ import Button from "../../ui/button/Button";
 import {useContext} from "react";
 import CartContext from "../../../store/CartContext";
 import Sandwich from "../../../entities/sandwich";
+import IngredientItem from "./ingredients/IngredientItem";
 
 interface SandwichProps {
     sandwich : Sandwich;
@@ -25,8 +26,14 @@ const SandwichItem = (props: SandwichProps) => {
                 <div>
                     <h3>{sandwich.name}</h3>
                     <p className="product-price">{currencyFormatter.format(sandwich.price)}</p>
-                    <p className="sandwich-ingredients">ingredients:</p>
                 </div>
+                    <div id="ingredients-container">
+                        { sandwich.ingredients
+                            .map(i =>
+                                <IngredientItem ingredient={i}/>
+                            )}
+                    </div>
+
                 <p className="sandwich-actions">
                     <Button
                         textOnly={false}

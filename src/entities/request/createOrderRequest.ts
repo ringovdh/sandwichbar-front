@@ -2,11 +2,11 @@ import Address from "../address";
 
 class CreateOrderRequest {
     userId: number;
-    items: { quantity: number, product: {productId: string }}[];
+    items: {quantity: number, productId: number}[];
     deliveryAddress: Address;
 
     constructor(userId: number,
-                items: { quantity: number, product: {productId: string }}[],
+                items: {quantity: number, productId: number}[],
                 deliveryAddress: Address) {
         this.userId = userId;
         this.items = items;
