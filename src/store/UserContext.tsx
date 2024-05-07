@@ -9,7 +9,8 @@ const UserContext = createContext({
     registerUser: (name: string, email: string, password: string) => {
     },
     loginUser: (email: string, password: string) => {
-    }
+    },
+    logoutUser: () => {},
 });
 
 // @ts-ignore
@@ -19,6 +20,7 @@ export function UserContextProvider({children}) {
     const [userName, setUserName] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     let navigate = useNavigate();
+
 
     const registerUser = async (name: string, email: string, password: string) => {
         setErrorMessage('');
@@ -45,9 +47,15 @@ export function UserContextProvider({children}) {
             })
             .catch((error) => {
                 if (error.response) {
-                    setErrorMessage(error.response.data.message)
+                    setErrorMessage(error.response.data.message + ', please try again')
                 }
             });
+    }
+
+    const logoutUser = () => {
+        sessionStorage.removeItem('token');
+        setUserId(0);
+        setUserName('');
     }
 
     const ctxValue = {
@@ -55,7 +63,8 @@ export function UserContextProvider({children}) {
         userName: userName,
         errorMessage: errorMessage,
         registerUser: registerUser,
-        loginUser: loginUser
+        loginUser: loginUser,
+        logoutUser: logoutUser,
     }
 
     return (

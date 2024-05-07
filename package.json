@@ -42,5 +42,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@testcontainers/postgresql": "^10.9.0",
+    "cypress": "^13.8.1",
+    "testcontainers": "^10.9.0"
   }
 }

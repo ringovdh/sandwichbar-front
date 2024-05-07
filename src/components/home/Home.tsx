@@ -8,7 +8,8 @@ const Home = () => {
     const userCtx = useContext(UserContext);
 
     return(
-        <div className="home-page-container">
+        <div id="home-page-container"
+             className="home-page-container">
             <p>Welcome {userCtx.userName} in our sandwichbar!</p>
             <Menucard></Menucard>
             <div className='sandwichbar-background'></div>

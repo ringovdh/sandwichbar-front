@@ -5,11 +5,13 @@ import './Header.css'
 import Button from "../ui/button/Button";
 import CartContext from "../../store/CartContext";
 import OrderProgressContext from "../../store/OrderProgressContext";
+import UserContext from "../../store/UserContext";
 
 const Header = () => {
 
     const cartCtx = useContext(CartContext);
     const orderProgressCtx = useContext(OrderProgressContext);
+    const userCtx = useContext(UserContext);
 
     const totalCartItems = cartCtx.items.reduce((totalItems, item: any) => {
         return totalItems + item.quantity;
@@ -26,7 +28,7 @@ const Header = () => {
                     <img className="header-logo" src={logoImg} alt="SandwichItem"/>
                     <h1 className="navbar-brand">
                         <Link to={"/"} className="nav-link">
-                            Faros SandwichItem-bar
+                            Faros Sandwich-bar
                         </Link>
                     </h1>
                     <div className="collapse navbar-collapse" id="navbarText">
@@ -36,23 +38,39 @@ const Header = () => {
                                     Menucard
                                 </Link>
                             </li>
-                            <li className="nav-item">
-                                <Link to={"/orders/my-orders"} className="nav-link">
+                            { userCtx.userId !== 0 && <li className="nav-item">
+                                <Link id="orders-link"
+                                      to={"/orders/orders"}
+                                      className="nav-link">
                                     My orders
                                 </Link>
-                            </li>
+                            </li> }
                         </ul>
                         <span className="navbar-text">
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                                <li className="nav-item">
-                                    <Link to={"/login"} className="nav-link">
-                                        Login
-                                    </Link>
-                                </li>
+                                { userCtx.userId === 0 &&
+                                    <li className="nav-item">
+                                        <Link to={"/login"} className="nav-link">
+                                            Login
+                                        </Link>
+                                    </li>
+                                }
+                                { userCtx.userId !== 0 &&
+                                    <Button
+                                        textOnly
+                                        id="logout-link"
+                                        className="nav-link"
+                                        onClick={ userCtx.logoutUser }>
+                                        Logout
+                                    </Button>
+                                }
                                 <li className="nav-item">
                                     <Button textOnly
-                                    className="nav-link"
-                                    onClick={ handleShowCart }>Cart ({totalCartItems})</Button>
+                                            id="cart-link"
+                                            className="nav-link"
+                                            onClick={ handleShowCart }>
+                                        Cart ({totalCartItems})
+                                    </Button>
                                 </li>
                             </ul>
                         </span>

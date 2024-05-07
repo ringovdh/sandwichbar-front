@@ -1,6 +1,6 @@
 import React, {useContext, useState} from "react";
-import UserContext from "../../store/UserContext";
-import Warning from "../warning/Warning";
+import UserContext from "../../../store/UserContext";
+import Warning from "../../warning/Warning";
 
 
 const Register = () => {

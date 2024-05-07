@@ -17,7 +17,6 @@ const Menucard = () => {
         async function loadProducts() {
             productService.getProducts()
                 .then((response) => {
-                    console.log('resp ', response)
                     setSandwiches(response.data.products.filter((p: Product) => p.productType === 'SANDWICH'));
                     setDrinks(response.data.products.filter((p: Product) => p.productType === 'DRINK'));
                 });
@@ -30,13 +29,13 @@ const Menucard = () => {
     return (
         <div id="menucard">
             <h1>Menucard</h1>
-            <MenuItem title={"Sandwiches"}>
+            <MenuItem key="s" title={"Sandwiches"}>
                 {sandwiches.map(s =>
                     <SandwichItem sandwich={s}/>
                 )}
             </MenuItem>
 
-            <MenuItem title={"Drinks"}>
+            <MenuItem key="d" title={"Drinks"}>
                 {drinks.map(d =>
                     <DrinkItem drink={d}/>
                 )}

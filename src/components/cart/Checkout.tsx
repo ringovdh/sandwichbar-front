@@ -33,7 +33,7 @@ export default function Checkout() {
             +postcodeTextInputRef.current!.value,
             cityTextInputRef.current!.value);
 
-        const orderItems  = cartCtx.items.map(i => {
+        const orderItems = cartCtx.items.map(i => {
             return {quantity: i.quantity, productId: i.product.id};
         });
 
@@ -41,6 +41,7 @@ export default function Checkout() {
 
         const response = orderService.createOrder(createOrderRequest);
         orderProgressCtx.hideCheckout()
+
     }
 
     return (
@@ -48,8 +49,8 @@ export default function Checkout() {
             <form onSubmit={handleSubmit}>
                 <h2> Checkout </h2>
                 <p>Total: {currencyFormatter.format(cartTotal)}</p>
-                <Input label="User name" type="text" id="user-name" />
-                <Input label="Email" type="email" id="email" />
+                <Input label="User name" type="text" id="user-name"/>
+                <Input label="Email" type="email" id="email"/>
                 <div className="control-row">
                     <p className="control">
                         <label htmlFor="street">Street</label>

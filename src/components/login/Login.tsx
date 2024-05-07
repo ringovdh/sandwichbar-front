@@ -26,8 +26,8 @@ const Login = () => {
 
     return (
         <>
-            {userCtx.errorMessage && < Warning message={userCtx.errorMessage}/>}
             <div className="login-container mx-auto">
+                {userCtx.errorMessage && <Warning message={userCtx.errorMessage}/>}
                 <div className={"titleContainer"}>
                     <div>Login</div>
                 </div>
@@ -36,24 +36,26 @@ const Login = () => {
                     <div className="form-floating input-login mx-auto">
                         <input type="email"
                                className="form-control"
-                               id="emailInput"
+                               id="email-input"
                                placeholder="name@example.com"
                                onChange={(ev) => setEmail(ev.target.value)}/>
-                        <label htmlFor="emailInput">Email address</label>
+                        <label htmlFor="email-input">Email address</label>
                     </div>
-                    <label className="errorLabel">{emailError}</label>
+                    <label id="email-error-message"
+                           className="errorLabel">{emailError}</label>
                 </div>
                 <br/>
                 <div className="inputContainer">
                     <div className="form-floating input-login mx-auto">
                         <input type="password"
                                className="form-control"
-                               id="PasswordInput"
+                               id="password-input"
                                placeholder="Password"
                                onChange={(ev) => setPassword(ev.target.value)}/>
-                        <label htmlFor="PasswordInput">Password</label>
+                        <label htmlFor="password-input">Password</label>
                     </div>
-                    <label className="errorLabel">{passwordError}</label>
+                    <label id="password-error-message"
+                           className="errorLabel">{passwordError}</label>
                 </div>
                 <br/>
                 <div>
@@ -62,7 +64,11 @@ const Login = () => {
                 </div>
                 <br/>
                 <div className={'inputContainer'}>
-                    <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Log in'}/>
+                    <input id='logInButton'
+                           className={'inputButton'}
+                           type="button"
+                           onClick={onButtonClick}
+                           value={'Log in'}/>
                 </div>
             </div>
         </>

@@ -21,10 +21,12 @@ const SandwichItem = (props: SandwichProps) => {
     }
 
     return (
-        <li className="product">
+        <li key={sandwich.id} className="product">
             <article>
                 <div>
                     <h3>{sandwich.name}</h3>
+                </div>
+                <div>
                     <p className="product-price">{currencyFormatter.format(sandwich.price)}</p>
                 </div>
                     <div id="ingredients-container">
@@ -36,6 +38,7 @@ const SandwichItem = (props: SandwichProps) => {
 
                 <p className="sandwich-actions">
                     <Button
+                        id={'add-to-cart-button-' + sandwich.id}
                         textOnly={false}
                         className=""
                         onClick={handleSandwichToCart}>Add to Cart</Button>
