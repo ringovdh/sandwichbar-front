@@ -1,7 +1,6 @@
 describe('Cart', () => {
     beforeEach(() => {
         cy.login()
-        cy.wait(1000)
         cy.get('#cart-link').click()
     })
 

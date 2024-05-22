@@ -4,16 +4,18 @@ import Product from "../entities/product";
 
 const ADD_PRODUCT = 'ADD_PRODUCT';
 const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
+const CLEAR_CART = 'CLEAR_CART'
 
 const CartContext = createContext({
     items: [] as OrderItem[],
     addProduct: (product: Product) => {},
     removeProduct: (product: Product) => {},
-    calculateCartTotal: () => { return 0 as number}
+    calculateCartTotal: () => { return 0 as number},
+    clearCart: () => {}
 });
 
 
-function cartReducer( state: { items: OrderItem[]; }, action: {type: string, product: Product} ) {
+function cartReducer( state: { items: OrderItem[]; }, action: {type: string, product?: Product} ) {
     if (action.type === ADD_PRODUCT) {
         const existingCartItemIndex = state.items.findIndex(
             (item) => item.product === action.product
@@ -27,7 +29,7 @@ function cartReducer( state: { items: OrderItem[]; }, action: {type: string, pro
                 quantity: existingItem.quantity + 1
             };
         } else {
-            const orderItem = new OrderItem(1, action.product)
+            const orderItem = new OrderItem(1, action.product!)
             updatedItems.push(orderItem);
         }
         return {...state, items: updatedItems};
@@ -48,6 +50,11 @@ function cartReducer( state: { items: OrderItem[]; }, action: {type: string, pro
                 quantity: existingCartItem.quantity - 1
             };
         }
+        return {...state, items: updatedItems};
+    }
+
+    if (action.type === CLEAR_CART) {
+        const updatedItems: OrderItem[] = [];
         return {...state, items: updatedItems};
     }
 
@@ -77,11 +84,16 @@ export function CartContextProvider(props: PropsWithChildren<CartContextProvider
             , 0);
     }
 
+    function clearCart() {
+        dispatchCartAction({ type: CLEAR_CART  });
+    }
+
     const ctxValue = {
         items: cart.items,
         addProduct,
         removeProduct,
-        calculateCartTotal
+        calculateCartTotal,
+        clearCart
     };
 
     return (

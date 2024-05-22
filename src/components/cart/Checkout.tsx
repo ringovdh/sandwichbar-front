@@ -12,7 +12,6 @@ import Address from "../../entities/address";
 
 export default function Checkout() {
     const cartCtx = useContext(CartContext);
-    const userCtx = useContext(UserContext);
     const orderProgressCtx = useContext(OrderProgressContext);
     const streetTextInputRef = useRef<HTMLInputElement>(null);
     const houseNumberTextInputRef = useRef<HTMLInputElement>(null);
@@ -37,10 +36,15 @@ export default function Checkout() {
             return {quantity: i.quantity, productId: i.product.id};
         });
 
-        const createOrderRequest = new CreateOrderRequest(userCtx.userId, orderItems, address);
+        const createOrderRequest = new CreateOrderRequest(orderItems, address);
 
-        const response = orderService.createOrder(createOrderRequest);
-        orderProgressCtx.hideCheckout()
+        orderService.createOrder(createOrderRequest)
+            .then((response) => {
+                cartCtx.clearCart();
+                orderProgressCtx.hideCheckout();
+            }
+        );
+
 
     }
 

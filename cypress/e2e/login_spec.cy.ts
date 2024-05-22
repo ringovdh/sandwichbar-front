@@ -1,54 +1,63 @@
 describe('Login', () => {
     beforeEach(() => {
-        cy.visit('/login')
+        cy.visit('/')
+        cy.get('#login-link').click()
     })
 
     it('Login page contains title', () => {
-        cy.get('.login-container')
-            .contains('Login')
+        cy.origin('https://sandwichbar.eu.auth0.com', () => {
+            cy.get('header').get('h1').contains('Welcome')
+        })
     })
 
     it('Login page contains register link', () => {
-        cy.contains('Please register first.')
-            .should('have.attr', 'href', '/register')
+        cy.origin('https://sandwichbar.eu.auth0.com', () => {
+            cy.contains('Sign up')
+                .should('have.attr', 'href')
+                .and('contain', '/u/signup?state=')
+        })
     })
 
     it('Login page requires email', () => {
-        cy.get('#logInButton')
-            .click()
-        cy.get('#email-error-message')
-            .contains('Please enter a valid email')
+        cy.origin('https://sandwichbar.eu.auth0.com', () => {
+            cy.get('input#password').type('S&cret-10')
+            cy.get('button[name=action]').click()
+            cy.get('input:invalid').should('have.length', 1)
+            cy.get('#username').then(($input) => {
+                expect($input[0].validationMessage).to.eq('Please fill out this field.')
+            })
+        })
     })
 
     it('Login page requires password', () => {
-        cy.get('#email-input')
-            .type('test@mail.com')
-        cy.get('#logInButton')
-            .click()
-        cy.get('#password-error-message')
-            .contains('Please enter a strong password')
+        cy.origin('https://sandwichbar.eu.auth0.com', () => {
+            cy.get('input#username').type('ringo@faros.be')
+            cy.get('button[name=action]').click()
+            cy.get('input:invalid').should('have.length', 1)
+            cy.get('#password').then(($input) => {
+                expect($input[0].validationMessage).to.eq('Please fill out this field.')
+            })
+        })
     })
 
     it('Login page requires correct username and password', () => {
-        cy.get('#email-input')
-            .type('test@mail.com')
-        cy.get('#password-input')
-            .type('123')
-        cy.get('#logInButton')
-            .click()
-        cy.get('.alert-danger')
-            .contains('Bad credentials, please try again')
+        cy.origin('https://sandwichbar.eu.auth0.com', () => {
+            cy.get('input#username').type('ringo@faros.be')
+            cy.get('input#password').type('S&cret-11')
+            cy.get('button[name=action]').click()
+            cy.get('input:invalid').should('have.length', 1)
+            cy.get('#error-element-password').contains('Wrong email or password')
+        })
     })
 
     it('Login page redirect to homepage after successful login', () => {
-        cy.get('#email-input')
-            .type('ringo@faros.be')
-        cy.get('#password-input')
-            .type('S&cret-10')
-        cy.get('#logInButton')
-            .click()
+        cy.origin('https://sandwichbar.eu.auth0.com', () => {
+            cy.get('input#username').type('ringo@faros.be')
+            cy.get('input#password').type('S&cret-10')
+            cy.get('button[name=action]').click()
+        })
         cy.hash().should('eq', '')
         cy.get('#home-page-container')
-            .contains('Welcome Ringo in our sandwichbar!')
+            .contains('Welcome in our sandwichbar!')
     })
 })

@@ -1,25 +1,24 @@
 import axios from "axios";
-import {getAuthToken} from "../utils/authenticate";
 import CreateOrderRequest from "../entities/request/createOrderRequest";
 
 class OrderService {
 
-    async getOrders(userId: number) {
-        return await axios.get('http://localhost:8080/orders/users/' + userId ,{
-            headers: {'Authorization': 'Bearer ' + getAuthToken()}
-        })
+    async getOrders(userId: string) {
+        return await axios.get('http://localhost:8080/orders/users', {withCredentials: true})
     }
 
     async createOrder(order: CreateOrderRequest) {
         return await axios.post('http://localhost:8080/orders',
             order,
             {
+                withCredentials: true,
                 headers: {
-                    'Authorization': 'Bearer ' + getAuthToken(),
-                    'Content-Type': 'application/json'}
+                    'Content-Type': 'application/json'
                 }
-            );
+            });
     }
 }
 
-export default new OrderService()
+const service =  new OrderService();
+
+export default service;

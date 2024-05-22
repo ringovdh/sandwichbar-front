@@ -38,7 +38,7 @@ const Header = () => {
                                     Menucard
                                 </Link>
                             </li>
-                            { userCtx.userId !== 0 && <li className="nav-item">
+                            { (userCtx.userId !== undefined && userCtx.userId !== '') && <li className="nav-item">
                                 <Link id="orders-link"
                                       to={"/orders/orders"}
                                       className="nav-link">
@@ -48,21 +48,15 @@ const Header = () => {
                         </ul>
                         <span className="navbar-text">
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                                { userCtx.userId === 0 &&
-                                    <li className="nav-item">
-                                        <Link to={"/login"} className="nav-link">
-                                            Login
-                                        </Link>
+                                { (userCtx.userId === undefined || userCtx.userId === '') &&
+                                    <li className="nav-item" id="login-link">
+                                        <a href="http://localhost:8080/oauth2/authorization/okta" className="nav-link">Login</a>
                                     </li>
                                 }
-                                { userCtx.userId !== 0 &&
-                                    <Button
-                                        textOnly
-                                        id="logout-link"
-                                        className="nav-link"
-                                        onClick={ userCtx.logoutUser }>
-                                        Logout
-                                    </Button>
+                                { (userCtx.userId !== undefined && userCtx.userId !== '') &&
+                                    <li className="nav-item">
+                                        <a href="http://localhost:8080/logout" className="nav-link">Logout</a>
+                                    </li>
                                 }
                                 <li className="nav-item">
                                     <Button textOnly

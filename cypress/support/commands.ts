@@ -1,7 +1,11 @@
 Cypress.Commands.add('login', () => {
-    cy.visit('/login')
-    cy.get('#email-input').type('ringo@faros.be')
-    cy.get('#password-input').type('S&cret-10')
-    cy.get('#logInButton').click()
-    cy.hash().should('eq', '')
+    cy.visit('/')
+    cy.get('#login-link').click()
+
+    cy.origin('https://sandwichbar.eu.auth0.com', () => {
+        cy.get('input#username').type('ringo@faros.be')
+        cy.get('input#password').type('S&cret-10')
+        cy.get('button[name=action]').click()
+    })
+
 })

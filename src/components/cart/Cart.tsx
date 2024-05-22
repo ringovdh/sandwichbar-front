@@ -20,7 +20,7 @@ export default function Cart() {
     }
 
     function handleCheckout() {
-        if (userCtx.userId !== 0) {
+        if (userCtx.userId !== undefined && userCtx.userId!== '') {
             orderProgressCtx.showCheckout()
         } else {
             handleCloseCart()
