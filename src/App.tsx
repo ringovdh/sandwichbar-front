@@ -10,6 +10,7 @@ import {CartContextProvider} from "./store/CartContext";
 import {OrderProgressContextProvider} from "./store/OrderProgressContext";
 import Cart from "./components/cart/Cart";
 import Checkout from "./components/cart/Checkout";
+import Account from "./components/user/Account";
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
                         <Routes>
                             <Route path="/" element={<Home/>}/>
                             <Route path="/orders/orders" element={<Orders/>}/>
+                            <Route path="/users/account" element={<Account/>}/>
                         </Routes>
                     </div>
                 </CartContextProvider>

@@ -44,8 +44,7 @@ const Orders = () => {
             </div>
         </div>
 
-    )
-        ;
+    );
 }
 
 export default Orders;

@@ -6,7 +6,6 @@ import {currencyFormatter} from "../../utils/formatting";
 import Input from "../ui/input/Input";
 import Button from "../ui/button/Button";
 import orderService from "../../services/OrderService";
-import UserContext from "../../store/UserContext";
 import CreateOrderRequest from "../../entities/request/createOrderRequest";
 import Address from "../../entities/address";
 
