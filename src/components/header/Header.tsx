@@ -57,7 +57,7 @@ const Header = () => {
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                 { (userCtx.userId === undefined || userCtx.userId === '') &&
                                     <li className="nav-item" id="login-link">
-                                        <a href="http://localhost:8080/oauth2/authorization/spring" className="nav-link">Login</a>
+                                        <a href="http://localhost:8080/oauth2/authorization/okta" className="nav-link">Login</a>
                                     </li>
                                 }
                                 { (userCtx.userId !== undefined && userCtx.userId !== '') &&
