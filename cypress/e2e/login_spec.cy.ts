@@ -1,3 +1,6 @@
+const auth_domain = 'http://127.0.0.1:9000';
+const login_button ='input#submit';
+
 describe('Login', () => {
     beforeEach(() => {
         cy.visit('/')
@@ -5,56 +8,50 @@ describe('Login', () => {
     })
 
     it('Login page contains title', () => {
-        cy.origin('https://sandwichbar.eu.auth0.com', () => {
-            cy.get('header').get('h1').contains('Welcome')
+        cy.origin(auth_domain, () => {
+            cy.get('body').get('.login').contains('Login')
         })
     })
 
     it('Login page contains register link', () => {
-        cy.origin('https://sandwichbar.eu.auth0.com', () => {
-            cy.contains('Sign up')
+        cy.origin(auth_domain, () => {
+            cy.get('.registration').contains('Are you new?')
+                .get('a')
                 .should('have.attr', 'href')
-                .and('contain', '/u/signup?state=')
+                .and('contain', '/registration')
         })
     })
 
-    it('Login page requires email', () => {
-        cy.origin('https://sandwichbar.eu.auth0.com', () => {
+   it('Login page requires email', () => {
+        cy.origin(auth_domain, () => {
             cy.get('input#password').type('S&cret-10')
-            cy.get('button[name=action]').click()
-            cy.get('input:invalid').should('have.length', 1)
-            cy.get('#username').then(($input) => {
-                expect($input[0].validationMessage).to.eq('Please fill out this field.')
-            })
+            cy.get('input#submit').click()
+            cy.get('.error').contains('Invalid email and password.')
         })
     })
 
-    it('Login page requires password', () => {
-        cy.origin('https://sandwichbar.eu.auth0.com', () => {
+   it('Login page requires password', () => {
+        cy.origin(auth_domain, () => {
             cy.get('input#username').type('ringo@faros.be')
-            cy.get('button[name=action]').click()
-            cy.get('input:invalid').should('have.length', 1)
-            cy.get('#password').then(($input) => {
-                expect($input[0].validationMessage).to.eq('Please fill out this field.')
-            })
+            cy.get('input#submit').click()
+            cy.get('.error').contains('Invalid email and password.')
         })
     })
 
-    it('Login page requires correct username and password', () => {
-        cy.origin('https://sandwichbar.eu.auth0.com', () => {
+   it('Login page requires correct username and password', () => {
+        cy.origin(auth_domain, () => {
             cy.get('input#username').type('ringo@faros.be')
             cy.get('input#password').type('S&cret-11')
-            cy.get('button[name=action]').click()
-            cy.get('input:invalid').should('have.length', 1)
-            cy.get('#error-element-password').contains('Wrong email or password')
+            cy.get('input#submit').click()
+            cy.get('.error').contains('Invalid email and password.')
         })
     })
 
-    it('Login page redirect to homepage after successful login', () => {
-        cy.origin('https://sandwichbar.eu.auth0.com', () => {
+   it('Login page redirect to homepage after successful login', () => {
+        cy.origin(auth_domain, () => {
             cy.get('input#username').type('ringo@faros.be')
             cy.get('input#password').type('S&cret-10')
-            cy.get('button[name=action]').click()
+            cy.get('input#submit').click()
         })
         cy.hash().should('eq', '')
         cy.get('#home-page-container')

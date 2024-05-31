@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 import React, {useContext} from "react";
-import logoImg from '../../assets/header-logo.png'
-import './Header.css'
+import logoImg from '../../assets/header-logo.png';
+import './Header.css';
 import Button from "../ui/button/Button";
 import CartContext from "../../store/CartContext";
 import OrderProgressContext from "../../store/OrderProgressContext";
