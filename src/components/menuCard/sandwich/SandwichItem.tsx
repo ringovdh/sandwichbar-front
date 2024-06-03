@@ -32,7 +32,7 @@ const SandwichItem = (props: SandwichProps) => {
                     <div id="ingredients-container">
                         { sandwich.ingredients
                             .map(i =>
-                                <IngredientItem ingredient={i}/>
+                                <IngredientItem key={i.id} ingredient={i}/>
                             )}
                     </div>
 
