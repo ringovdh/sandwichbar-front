@@ -1,11 +1,62 @@
 .header {
     padding: 0 10px;
 }
-
 .header-logo {
     width: 10%;
 }
-
 .login-links {
 
+}
+.user-icon {
+    width: 30px;
+    border-radius: 50% !important;
+    cursor: pointer;
+}
+.sub-menu-wrapper {
+    position: absolute;
+    top: 100%;
+    right: 5%;
+    background: #282c34;
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height 0.5s;
+}
+.sub-menu-wrapper.open-menu {
+    max-height: 400px;
+}
+.sub-menu {
+    padding: 5px;
+    margin:10px;
+    color: white;
+}
+.sub-menu-link {
+    display: flex;
+    align-items: center;
+    margin: 12px 0;
+}
+.sub-menu-link p {
+    width: 100%;
+    margin-bottom: 0px !important;
+}
+.sub-menu-link span {
+    transition: transform 0.5s;
+}
+.sub-menu-link:hover span {
+    transform: translateX(5px);
+}
+.sub-menu-link:hover p {
+    font-weight: 600;
+}
+.user-info {
+    display: flex;
+    align-items: center;
+}
+.user-info h3 {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 20px;
+}
+.user-info img {
+    width: 40px;
+    border-radius: 50%;
 }

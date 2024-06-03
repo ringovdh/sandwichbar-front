@@ -1,6 +1,7 @@
 import {Link} from "react-router-dom";
 import React, {useContext} from "react";
 import logoImg from '../../assets/header-logo.png';
+import userIcon from '../../assets/user.png'
 import './Header.css';
 import Button from "../ui/button/Button";
 import CartContext from "../../store/CartContext";
@@ -21,6 +22,11 @@ const Header = () => {
         orderProgressCtx.showCart();
     }
 
+    function toggleMenu() {
+        let subMenu = document.getElementById("subMenu");
+        subMenu!.classList.toggle("open-menu");
+    }
+
     return (
         <div className='header'>
             <nav className="navbar navbar-expand-lg navbar-dark  bg-dark p-2">
@@ -38,38 +44,60 @@ const Header = () => {
                                     Menucard
                                 </Link>
                             </li>
-                            { (userCtx.userId !== undefined && userCtx.userId !== '') && <li className="nav-item">
+                            {(userCtx.userId !== undefined && userCtx.userId !== '') && <li className="nav-item">
                                 <Link id="orders-link"
                                       to={"/orders/orders"}
                                       className="nav-link">
                                     My orders
                                 </Link>
-                            </li> }
-                            { (userCtx.userId !== undefined && userCtx.userId !== '') && <li className="nav-item">
-                                <Link id="account-link"
-                                      to={"/users/account"}
-                                      className="nav-link">
-                                    My account
-                                </Link>
-                            </li> }
+                            </li>}
                         </ul>
                         <span className="navbar-text">
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                                { (userCtx.userId === undefined || userCtx.userId === '') &&
+                                {(userCtx.userId === undefined || userCtx.userId === '') &&
                                     <li className="nav-item" id="login-link">
-                                        <a href="http://localhost:8080/oauth2/authorization/spring" className="nav-link">Login</a>
+                                        <a href="http://localhost:8080/oauth2/authorization/spring"
+                                           className="nav-link">Login</a>
                                     </li>
                                 }
-                                { (userCtx.userId !== undefined && userCtx.userId !== '') &&
+                                {(userCtx.userId !== undefined && userCtx.userId !== '') &&
                                     <li className="nav-item">
-                                        <a href="http://localhost:8080/logout" className="nav-link">Logout</a>
+                                        <div data-toggle="dropdown">
+                                            <img src={userIcon} alt="user icon" className="user-icon" onClick={toggleMenu}/>
+                                        </div>
+                                        <div className="sub-menu-wrapper" id="subMenu">
+                                            <div className="sub-menu">
+                                                <div className="user-info">
+                                                    <img src={userIcon} alt="user icon"/>
+                                                    <h3>{userCtx.userName}</h3>
+                                                </div>
+
+                                            </div>
+                                            <hr/>
+                                            <li>
+                                                <Link id="account-link"
+                                                      to={"/users/account"}
+                                                      className="nav-link sub-menu-link">
+                                                    <p>My account</p>
+                                                    <span> {'>'} </span>
+                                                </Link>
+
+                                            </li>
+                                            <li>
+                                                <a href="http://localhost:8080/logout"
+                                                   className="nav-link sub-menu-link">
+                                                    <p>Logout</p>
+                                                    <span> {'>'} </span>
+                                                </a>
+                                            </li>
+                                        </div>
                                     </li>
                                 }
                                 <li className="nav-item">
                                     <Button textOnly
                                             id="cart-link"
                                             className="nav-link"
-                                            onClick={ handleShowCart }>
+                                            onClick={handleShowCart}>
                                         Cart ({totalCartItems})
                                     </Button>
                                 </li>
