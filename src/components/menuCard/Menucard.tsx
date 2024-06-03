@@ -29,13 +29,13 @@ const Menucard = () => {
     return (
         <div id="menucard">
             <h1>Menucard</h1>
-            <MenuItem key="s" title={"Sandwiches"}>
+            <MenuItem title={"Sandwiches"}>
                 {sandwiches.map(s =>
                     <SandwichItem key={s.id} sandwich={s}/>
                 )}
             </MenuItem>
 
-            <MenuItem key="d" title={"Drinks"}>
+            <MenuItem title={"Drinks"}>
                 {drinks.map(d =>
                     <DrinkItem key={d.id} drink={d}/>
                 )}
