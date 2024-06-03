@@ -9,3 +9,5 @@ Cypress.Commands.add('login', () => {
     })
 
 })
+
+export {}

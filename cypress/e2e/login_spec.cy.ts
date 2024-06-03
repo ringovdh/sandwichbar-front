@@ -1,5 +1,4 @@
 const auth_domain = 'http://127.0.0.1:9000';
-const login_button ='input#submit';
 
 describe('Login', () => {
     beforeEach(() => {
@@ -58,3 +57,5 @@ describe('Login', () => {
             .contains('Welcome in our sandwichbar!')
     })
 })
+
+export {}

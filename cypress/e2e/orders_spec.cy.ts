@@ -15,5 +15,6 @@ describe('Orders', () => {
         cy.get('#orders-table')
             .get('#orders-table-body')
     })
-
 })
+
+export {}
