@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import React, {useContext} from "react";
 import logoImg from '../../assets/header-logo.png';
 import userIcon from '../../assets/user.png'
@@ -40,17 +40,24 @@ const Header = () => {
                     <div className="collapse navbar-collapse" id="navbarText">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <Link to={"/"} className="nav-link">
+                                <NavLink to={"/"} className="nav-link">
                                     Menucard
-                                </Link>
+                                </NavLink>
                             </li>
-                            {(userCtx.userId !== undefined && userCtx.userId !== '') && <li className="nav-item">
-                                <Link id="orders-link"
-                                      to={"/orders/orders"}
+                            { userCtx.isUser && <li className="nav-item">
+                                <NavLink id="orders-link"
+                                      to={"/user/orders"}
                                       className="nav-link">
                                     My orders
-                                </Link>
-                            </li>}
+                                </NavLink>
+                            </li> }
+                            { userCtx.isAdmin && <li className="nav-item">
+                                <NavLink id="orders-link"
+                                         to={"/admin/orders"}
+                                         className="nav-link">
+                                    All orders
+                                </NavLink>
+                            </li> }
                         </ul>
                         <span className="navbar-text">
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
@@ -75,12 +82,12 @@ const Header = () => {
                                             </div>
                                             <hr/>
                                             <li>
-                                                <Link id="account-link"
-                                                      to={"/users/account"}
+                                                <NavLink id="account-link"
+                                                      to={"/user/account"}
                                                       className="nav-link sub-menu-link">
                                                     <p>My account</p>
                                                     <span> {'>'} </span>
-                                                </Link>
+                                                </NavLink>
 
                                             </li>
                                             <li>

@@ -1,37 +1,55 @@
 import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import {Routes, Route} from 'react-router-dom';
-import Header from "./components/header/Header";
+import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import Home from "./components/home/Home";
 import Orders from "./components/order/Orders"
-import {UserContextProvider} from "./store/UserContext";
-import {CartContextProvider} from "./store/CartContext";
-import {OrderProgressContextProvider} from "./store/OrderProgressContext";
-import Cart from "./components/cart/Cart";
-import Checkout from "./components/cart/Checkout";
+import AllOrders from "./components/order/All-orders"
 import Account from "./components/user/Account";
-
+import RootLayout from "./components/root/Root";
+import ErrorPage from "./components/root/Error";
+import Protected from "./components/root/Protected";
 
 function App() {
 
+    const router = createBrowserRouter([
+        {
+            path: '/',
+            element: <RootLayout/>,
+            errorElement: <ErrorPage/>,
+            children: [
+                {
+                    index: true,
+                    element: <Home/>
+                },
+                {
+                    element: <Protected role="USER"/>,
+                    children: [
+                        {
+                            path: '/user/orders',
+                            element: <Orders/>
+                        },
+                        {
+                            path: '/user/account',
+                            element: <Account/>
+                        }
+                    ]
+                },
+                {
+                    element: <Protected role="ADMIN"/>,
+                    children: [
+                        {
+                            path: '/admin/orders',
+                            element: <AllOrders/>
+                        }
+                    ]
+                },
+            ]
+        },
+    ]);
+
     return (
-        <UserContextProvider>
-            <OrderProgressContextProvider>
-                <CartContextProvider>
-                    < Header/>
-                    <div className="container mt-3">
-                        <Cart />
-                        <Checkout />
-                        <Routes>
-                            <Route path="/" element={<Home/>}/>
-                            <Route path="/orders/orders" element={<Orders/>}/>
-                            <Route path="/users/account" element={<Account/>}/>
-                        </Routes>
-                    </div>
-                </CartContextProvider>
-            </OrderProgressContextProvider>
-        </UserContextProvider>
+        <RouterProvider router={router}/>
     );
 }
 

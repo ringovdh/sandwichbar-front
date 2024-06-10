@@ -1,18 +1,18 @@
 import orderService from "../../services/OrderService";
-import {useContext, useEffect, useState} from "react";
-
-
-import UserContext from "../../store/UserContext";
+import {useEffect, useState} from "react";
+import Order from "../../entities/order";
 
 const Orders = () => {
-    const userCtx = useContext(UserContext);
-    const [orders, setOrders] = useState([{id: 0, price: 0.0}]);
+
+    const [orders, setOrders] = useState([] as Order[]);
 
     useEffect(() => {
         async function loadOrders() {
-            orderService.getOrders(userCtx.userId)
+            orderService.getOrders()
                 .then((response) => {
-                    setOrders(response.data.orders);
+                    if (response) {
+                        setOrders(response.data.orders);
+                    }
                 });
         }
 
@@ -35,7 +35,7 @@ const Orders = () => {
                         <tr key={order.id}>
                             <th scope="row"> {order.id} </th>
                             <td>{order.price}</td>
-                            <td>b</td>
+                            <td></td>
                         </tr>)
                     }</tbody> }
                 </table>}

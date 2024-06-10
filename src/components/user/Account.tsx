@@ -15,6 +15,7 @@ const Account = () => {
             usernameTextInputRef.current.focus()
         }
     }, [])
+
     function handleSubmit(event: React.FormEvent) {
         event.preventDefault();
         const updateUserRequest = new UpdateUserRequest(username);
