@@ -8,7 +8,7 @@ class OrderService {
     }
 
     async getAllOrders() {
-        return await axios.get('http://localhost:8080/orders/', {withCredentials: true})
+        return await axios.get('http://localhost:8080/orders', {withCredentials: true})
     }
 
     async createOrder(order: CreateOrderRequest) {

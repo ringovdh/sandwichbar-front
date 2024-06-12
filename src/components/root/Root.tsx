@@ -25,7 +25,3 @@ const RootLayout = () => {
 }
 
 export default RootLayout;
-
-export function checkRoles() {
-
- }
