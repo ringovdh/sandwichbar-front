@@ -2,7 +2,7 @@ import {createContext, useState} from 'react';
 import userService from "../services/AuthenticationService";
 
 const UserContext = createContext({
-    userId: '',
+    userRef: '',
     userEmail: '',
     userName: '',
     isUser: false,
@@ -15,7 +15,7 @@ const UserContext = createContext({
 // @ts-ignore
 export function UserContextProvider({children}) {
 
-    const [userId, setUserId] = useState('')
+    const [userRef, setUserRef] = useState('')
     const [userName, setUserName] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [isUser, setIsUser] = useState(false);
@@ -26,7 +26,7 @@ export function UserContextProvider({children}) {
         userService.getUser()
             .then((response) => {
                 console.log(response.data)
-                setUserId(response.data.userId);
+                setUserRef(response.data.userRef);
                 setUserEmail(response.data.userEmail);
                 setUserName(response.data.username);
                 setIsUser(checkRole('ROLE_USER', response.data.roles));
@@ -44,7 +44,7 @@ export function UserContextProvider({children}) {
     }
 
     const ctxValue = {
-        userId: userId,
+        userRef: userRef,
         userName: userName,
         userEmail: userEmail,
         isUser: isUser,
