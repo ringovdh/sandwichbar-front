@@ -34,7 +34,6 @@ function cartReducer( state: { items: OrderItem[]; }, action: {type: string, pro
             const orderItem = new OrderItem(1, action.product!)
             updatedItems.push(orderItem);
         }
-        console.log('items', updatedItems)
         return {...state, items: updatedItems};
     }
 

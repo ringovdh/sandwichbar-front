@@ -25,7 +25,6 @@ export function UserContextProvider({children}) {
     const getUser = () => {
         userService.getUser()
             .then((response) => {
-                console.log(response.data)
                 setUserRef(response.data.userRef);
                 setUserEmail(response.data.userEmail);
                 setUserName(response.data.username);

@@ -37,7 +37,6 @@ export default function Checkout() {
         });
 
         const createOrderRequest = new CreateOrderRequest(orderItems, address);
-        console.log('OR', createOrderRequest)
         orderService.createOrder(createOrderRequest)
             .then((response) => {
                 cartCtx.clearCart();
