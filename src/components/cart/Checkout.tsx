@@ -8,6 +8,7 @@ import Button from "../ui/button/Button";
 import orderService from "../../services/OrderService";
 import CreateOrderRequest from "../../entities/request/createOrderRequest";
 import Address from "../../entities/address";
+import OrderItem from "../../entities/orderItem";
 
 export default function Checkout() {
     const cartCtx = useContext(CartContext);
@@ -32,11 +33,11 @@ export default function Checkout() {
             cityTextInputRef.current!.value);
 
         const orderItems = cartCtx.items.map(i => {
-            return {quantity: i.quantity, productId: i.product.id};
+            return new OrderItem(i.quantity, i.product);
         });
 
         const createOrderRequest = new CreateOrderRequest(orderItems, address);
-
+        console.log('OR', createOrderRequest)
         orderService.createOrder(createOrderRequest)
             .then((response) => {
                 cartCtx.clearCart();

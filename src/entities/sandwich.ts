@@ -5,8 +5,8 @@ class Sandwich extends Product{
 
     ingredients: Ingredient[];
 
-    constructor(id: number, name: string, price: number, ingredients: Ingredient[]) {
-        super(id, name, price, "SANDWICH");
+    constructor(id: number, name: string, productRef: string, price: number, ingredients: Ingredient[]) {
+        super(id, name, productRef, price, "SANDWICH");
         this.ingredients = ingredients
     }
 }

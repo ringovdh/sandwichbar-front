@@ -1,6 +1,7 @@
 import {createContext, PropsWithChildren, ReactNode, useReducer} from "react";
 import OrderItem from "../entities/orderItem";
 import Product from "../entities/product";
+import product from "../entities/product";
 
 const ADD_PRODUCT = 'ADD_PRODUCT';
 const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
@@ -17,8 +18,9 @@ const CartContext = createContext({
 
 function cartReducer( state: { items: OrderItem[]; }, action: {type: string, product?: Product} ) {
     if (action.type === ADD_PRODUCT) {
+
         const existingCartItemIndex = state.items.findIndex(
-            (item) => item.product === action.product
+            (item) => item.product.productRef === action.product!.productRef
         );
         const updatedItems = [...state.items];
 
@@ -32,12 +34,13 @@ function cartReducer( state: { items: OrderItem[]; }, action: {type: string, pro
             const orderItem = new OrderItem(1, action.product!)
             updatedItems.push(orderItem);
         }
+        console.log('items', updatedItems)
         return {...state, items: updatedItems};
     }
 
     if (action.type === REMOVE_PRODUCT) {
         const existingCartItemIndex = state.items.findIndex(
-            (item) => item.product === action.product
+            (item) => item.product.productRef === action.product?.productRef
         );
         const existingCartItem = state.items[existingCartItemIndex];
         const updatedItems = [...state.items];
