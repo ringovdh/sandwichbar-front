@@ -29,6 +29,12 @@
     margin:10px;
     color: white;
 }
+.drpdwn {
+    padding-inline-start: 0 !important;
+}
+.drpdwn li {
+    list-style: none !important;
+}
 .sub-menu-link {
     display: flex;
     align-items: center;

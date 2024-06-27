@@ -1,8 +1,15 @@
-class UpdateUserRequest {
-    username: String;
+import Address from "../address";
 
-    constructor(username: String) {
+
+class UpdateUserRequest {
+    username: string;
+    fullName: string;
+    address: Address;
+
+    constructor(username: string, fullName: string, address: Address) {
         this.username = username;
+        this.fullName = fullName;
+        this.address = address;
     }
 }
 

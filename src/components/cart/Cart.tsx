@@ -8,7 +8,7 @@ import OrderProgressContext from "../../store/OrderProgressContext";
 import CartItem from "./CartItem";
 import {useNavigate} from "react-router-dom";
 
-export default function Cart() {
+const Cart = () => {
     const cartCtx = useContext(CartContext);
     const userCtx = useContext(UserContext);
     const orderProgressCtx = useContext(OrderProgressContext);
@@ -36,7 +36,7 @@ export default function Cart() {
                 <h2>Cart</h2>
                 <ul>
                     {cartCtx.items.map((item) => (
-                        <CartItem key={item.product.id}
+                        <CartItem key={item.product.productRef}
                                   name={item.product.name}
                                   price={item.product.price}
                                   quantity={item.quantity}
@@ -63,3 +63,5 @@ export default function Cart() {
         </Modal>
     );
 }
+
+export default Cart;

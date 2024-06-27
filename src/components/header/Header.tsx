@@ -81,22 +81,24 @@ const Header = () => {
 
                                             </div>
                                             <hr/>
-                                            <li>
-                                                <NavLink id="account-link"
-                                                      to={"/user/account"}
-                                                      className="nav-link sub-menu-link">
-                                                    <p>My account</p>
-                                                    <span> {'>'} </span>
-                                                </NavLink>
+                                            <ul className="drpdwn">
+                                                <li >
+                                                    <NavLink id="account-link"
+                                                          to={"/user/account"}
+                                                          className="nav-link sub-menu-link">
+                                                        <p>My account</p>
+                                                        <span> {'>'} </span>
+                                                    </NavLink>
 
-                                            </li>
-                                            <li>
-                                                <a href="http://localhost:8080/logout"
-                                                   className="nav-link sub-menu-link">
-                                                    <p>Logout</p>
-                                                    <span> {'>'} </span>
-                                                </a>
-                                            </li>
+                                                </li>
+                                                <li>
+                                                    <a href="http://localhost:8080/logout"
+                                                       className="nav-link sub-menu-link">
+                                                        <p>Logout</p>
+                                                        <span> {'>'} </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </li>
                                 }

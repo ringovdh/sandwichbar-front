@@ -3,20 +3,18 @@ import React, {useContext, useRef} from "react";
 import CartContext from "../../store/CartContext";
 import OrderProgressContext from "../../store/OrderProgressContext";
 import {currencyFormatter} from "../../utils/formatting";
-import Input from "../ui/input/Input";
 import Button from "../ui/button/Button";
 import orderService from "../../services/OrderService";
 import CreateOrderRequest from "../../entities/request/createOrderRequest";
 import Address from "../../entities/address";
 import OrderItem from "../../entities/orderItem";
+import UserContext from "../../store/UserContext";
+import AddressForm from "../form/AddressForm";
 
 export default function Checkout() {
     const cartCtx = useContext(CartContext);
+    const userCtx = useContext(UserContext);
     const orderProgressCtx = useContext(OrderProgressContext);
-    const streetTextInputRef = useRef<HTMLInputElement>(null);
-    const houseNumberTextInputRef = useRef<HTMLInputElement>(null);
-    const postcodeTextInputRef = useRef<HTMLInputElement>(null);
-    const cityTextInputRef = useRef<HTMLInputElement>(null);
     const cartTotal = cartCtx.calculateCartTotal();
 
     function handleCloseCheckout() {
@@ -43,8 +41,6 @@ export default function Checkout() {
                 orderProgressCtx.hideCheckout();
             }
         );
-
-
     }
 
     return (
@@ -52,28 +48,21 @@ export default function Checkout() {
             <form onSubmit={handleSubmit}>
                 <h2> Checkout </h2>
                 <p>Total: {currencyFormatter.format(cartTotal)}</p>
-                <Input label="User name" type="text" id="user-name"/>
-                <Input label="Email" type="email" id="email"/>
-                <div className="control-row">
-                    <p className="control">
-                        <label htmlFor="street">Street</label>
-                        <input type="text" id="street" ref={streetTextInputRef}/>
-                    </p>
-                    <p className="control">
-                        <label htmlFor="number">Street</label>
-                        <input type="text" id="number" ref={houseNumberTextInputRef}/>
-                    </p>
-                </div>
-                <div className="control-row">
-                    <p className="control">
-                        <label htmlFor="postcode">Postcode</label>
-                        <input type="number" id="postcode" ref={postcodeTextInputRef}/>
-                    </p>
-                    <p className="control">
-                        <label htmlFor="city">City</label>
-                        <input type="text" id="city" ref={cityTextInputRef}/>
-                    </p>
-                </div>
+                <p className="control">
+                    <label htmlFor="user-name">Username</label>
+                    <input type="text"
+                           id="user-name"
+                           value={userCtx.userName}
+                           disabled={true}/>
+                </p>
+                <p className="control">
+                    <label htmlFor="user-email">Email</label>
+                    <input type="email"
+                           id="user-email"
+                           value={userCtx.userEmail}
+                           disabled={true}/>
+                </p>
+                <AddressForm></AddressForm>
                 <p className="modal-actions">
                     <Button
                         type="button"
