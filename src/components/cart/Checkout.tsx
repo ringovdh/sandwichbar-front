@@ -1,5 +1,6 @@
 import Modal from "../ui/modal/Modal";
-import React, {useContext, useRef} from "react";
+import React, {useContext} from "react";
+import { useForm } from "react-hook-form"
 import CartContext from "../../store/CartContext";
 import OrderProgressContext from "../../store/OrderProgressContext";
 import {currencyFormatter} from "../../utils/formatting";
@@ -11,6 +12,8 @@ import OrderItem from "../../entities/orderItem";
 import UserContext from "../../store/UserContext";
 import AddressForm from "../form/AddressForm";
 
+interface FormData { street: string; number: string; postcode: number; city: string }
+
 export default function Checkout() {
     const cartCtx = useContext(CartContext);
     const userCtx = useContext(UserContext);
@@ -21,14 +24,12 @@ export default function Checkout() {
         orderProgressCtx.hideCheckout()
     }
 
-    function handleSubmit(event: React.FormEvent) {
-        event.preventDefault();
+    const { register, handleSubmit} = useForm<FormData>();
 
-        const address = new Address(
-            streetTextInputRef.current!.value,
-            houseNumberTextInputRef.current!.value,
-            +postcodeTextInputRef.current!.value,
-            cityTextInputRef.current!.value);
+    function onSubmit(data: any) {
+
+       const address = new Address(data.street, data.number, data.postcode, data.city);
+        console.log('address', address)
 
         const orderItems = cartCtx.items.map(i => {
             return new OrderItem(i.quantity, i.product);
@@ -45,13 +46,14 @@ export default function Checkout() {
 
     return (
         <Modal open={orderProgressCtx.progress === 'CHECKOUT'} onClose={handleCloseCheckout}>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <h2> Checkout </h2>
                 <p>Total: {currencyFormatter.format(cartTotal)}</p>
                 <p className="control">
                     <label htmlFor="user-name">Username</label>
                     <input type="text"
                            id="user-name"
+                           name="user-name"
                            value={userCtx.userName}
                            disabled={true}/>
                 </p>
@@ -59,10 +61,11 @@ export default function Checkout() {
                     <label htmlFor="user-email">Email</label>
                     <input type="email"
                            id="user-email"
+                           name="user-email"
                            value={userCtx.userEmail}
                            disabled={true}/>
                 </p>
-                <AddressForm></AddressForm>
+                <AddressForm register = { register }></AddressForm>
                 <p className="modal-actions">
                     <Button
                         type="button"
