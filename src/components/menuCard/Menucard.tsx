@@ -20,7 +20,6 @@ const Menucard = () => {
                     setSandwiches(response.data.products.filter((p: Product) => p.productType === 'SANDWICH'));
                     setDrinks(response.data.products.filter((p: Product) => p.productType === 'DRINK'));
                 });
-
         }
 
         loadProducts();
