@@ -18,3 +18,7 @@ to launch te sandwichbar app
 you also need the https://github.com/ringovdh/sandwichbar (backend) 
 for security use https://github.com/ringovdh/yorian-authorization-server 
 there is also an optional resource server available https://github.com/ringovdh/sandwich-api
+
+note: first start the authorization server then the backend en then the frontend
+
+application runs on http://localhost:3000
